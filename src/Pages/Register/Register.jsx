@@ -1,9 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
+
+  const [registerError, setRegisterError] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -14,6 +20,16 @@ const Register = () => {
     const password = form.get("password");
     console.log(name, photo, email, password);
 
+    if (password.length < 6) {
+      setRegisterError("password should be minimum  6 character");
+      return;
+    } else if (!/[A-Z]/.test(password)) {
+      setRegisterError("Give at least one uppercase");
+      return;
+    }
+
+    //  reset error
+    setRegisterError("");
     // create user
 
     createUser(email, password)
@@ -22,6 +38,7 @@ const Register = () => {
       })
       .catch((error) => {
         console.error(error);
+        setRegisterError(error.message);
       });
   };
   return (
@@ -71,13 +88,23 @@ const Register = () => {
           <label className="label">
             <span className="label-text">Password</span>
           </label>
+
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             className="input input-bordered"
             required
           />
+          <div className="relative">
+            <span
+              className="cursor-pointer absolute left-[860px] bottom-[10px] text-2xl"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>}
+            </span>
+          </div>
+
           <label className="label">
             <a href="#" className="label-text-alt link link-hover">
               Forgot password?
@@ -93,6 +120,9 @@ const Register = () => {
             Login
           </Link>
         </p>
+        {registerError && (
+          <p className="text-error text-center">{registerError}</p>
+        )}
       </form>
     </>
   );

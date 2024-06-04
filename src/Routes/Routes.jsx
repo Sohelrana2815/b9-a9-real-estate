@@ -3,6 +3,8 @@ import Root from "../layouts/Root";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import PrivetRoutes from "../Privet/PrivetRoutes";
+import Contact from "../Pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/contact",
+        element: (
+          <PrivetRoutes>
+            <Contact></Contact>
+          </PrivetRoutes>
+        ),
       },
     ],
   },
