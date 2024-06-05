@@ -1,9 +1,11 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, googleLogin, githubLogin } = useContext(AuthContext);
+
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -14,7 +16,30 @@ const Login = () => {
     // sign in user
     signInUser(email, password)
       .then((result) => {
+        console.log(result.user);0
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
         console.log(result.user);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleGithubLogin = () => {
+    githubLogin()
+      .then((result) => {
+        console.log(result.user);
+        navigate("/");
       })
       .catch((error) => {
         console.error(error);
@@ -60,6 +85,7 @@ const Login = () => {
         <div className="form-control mt-6">
           <button className="btn btn-primary">Login</button>
         </div>
+
         <p className="text-center">
           Do not have an account ?
           <Link className="text-secondary ml-3" to="/register">
@@ -67,6 +93,20 @@ const Login = () => {
           </Link>
         </p>
       </form>
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline hover:bg-secondary"
+        >
+          Login with Google
+        </button>
+        <button
+          onClick={handleGithubLogin}
+          className="btn btn-outline hover:bg-secondary"
+        >
+          Login with Github
+        </button>
+      </div>
     </>
   );
 };

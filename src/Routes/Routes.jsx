@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import PrivetRoutes from "../Privet/PrivetRoutes";
 import Contact from "../Pages/Contact/Contact";
+import EstateProperty from "../Pages/EstateProperty/EstateProperty";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoutes>
             <Contact></Contact>
+          </PrivetRoutes>
+        ),
+      },
+      {
+        path: "/property",
+        element: (
+          <PrivetRoutes>
+            <EstateProperty></EstateProperty>
           </PrivetRoutes>
         ),
       },

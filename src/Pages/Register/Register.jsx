@@ -8,6 +8,7 @@ const Register = () => {
   const { createUser } = useContext(AuthContext);
 
   const [registerError, setRegisterError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,15 +27,20 @@ const Register = () => {
     } else if (!/[A-Z]/.test(password)) {
       setRegisterError("Give at least one uppercase");
       return;
+    } else if (!/[a-z]/.test(password)) {
+      setRegisterError("Give at least one lowercase");
+      return;
     }
 
     //  reset error
     setRegisterError("");
+    setSuccess("");
     // create user
 
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
+        setSuccess("A new user created successfully.");
       })
       .catch((error) => {
         console.error(error);
@@ -120,6 +126,7 @@ const Register = () => {
             Login
           </Link>
         </p>
+        {success && <p className="text-success text-center">{success}</p>}
         {registerError && (
           <p className="text-error text-center">{registerError}</p>
         )}

@@ -7,13 +7,28 @@ const Navbar = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink
+          className="hover:bg-primary hover:text-white text-base ml-4"
+          to="/"
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink
+          className="hover:bg-primary hover:text-white text-base ml-4"
+          to="/login"
+        >
+          Login
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/contact">Contact US</NavLink>
+        <NavLink
+          className="hover:bg-primary hover:text-white text-base ml-4"
+          to="/contact"
+        >
+          Contact US
+        </NavLink>
       </li>
     </>
   );
